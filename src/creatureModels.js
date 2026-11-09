@@ -12,7 +12,7 @@ function normalize3(x, y, z) {
 }
 
 // =============================================================================
-// CREATURE DEFINITIONS & METADATA
+// CREATURE DEFINITIONS & METADATA (DIVERSE FACIAL ANATOMY)
 // =============================================================================
 
 export const CREATURE_MODELS = [
@@ -20,7 +20,7 @@ export const CREATURE_MODELS = [
     id: 'mochi',
     name: 'Mochi-Puff',
     icon: '🌸',
-    tagline: 'Chubby mochi blob with perky cat ears, rosy cheeks & joyful smile',
+    tagline: 'Plush cloud critter with expressive anime eyes & glowing blush (Eyes Only)',
     defaultSettings: {
       baseColor: '#5e2bff',
       tipColor: '#ff9ec7',
@@ -34,27 +34,27 @@ export const CREATURE_MODELS = [
     }
   },
   {
-    id: 'kitsune',
-    name: 'Kitsune Fox',
-    icon: '🦊',
-    tagline: 'Alert fox ears, tapered snout, black nose, cheek whiskers & smiling mouth',
+    id: 'bunny',
+    name: 'Lop Bunny',
+    icon: '🐰',
+    tagline: 'Long floppy ears, doe eyes & cute twitchy pink nose button (Eyes & Nose)',
     defaultSettings: {
-      baseColor: '#8a2b0e',
-      tipColor: '#fed7aa',
-      furLength: 0.30,
-      furDensity: 0.85,
-      roughness: 0.75,
-      specular: 0.26,
-      clumping: 0.44,
-      curliness: 0.20,
-      skinColor: '#3a1309'
+      baseColor: '#473b64',
+      tipColor: '#fce7f3',
+      furLength: 0.32,
+      furDensity: 0.88,
+      roughness: 0.76,
+      specular: 0.22,
+      clumping: 0.38,
+      curliness: 0.42,
+      skinColor: '#2b223d'
     }
   },
   {
     id: 'highland',
     name: 'Highland Calf',
     icon: '🐮',
-    tagline: 'Curved horn nubs, droopy ears, wide damp muzzle & smiling happy face',
+    tagline: 'Horn nubs, shaggy bangs, doe eyes & wide damp cow muzzle (Eyes & Muzzle)',
     defaultSettings: {
       baseColor: '#6c3210',
       tipColor: '#fcd34d',
@@ -71,7 +71,7 @@ export const CREATURE_MODELS = [
     id: 'dragon',
     name: 'Dragon Baby',
     icon: '🐉',
-    tagline: 'Swept-back horns, wing nubs, spine crest & luminous reptilian eyes',
+    tagline: 'Luminous reptilian slit eyes, swept-back horns & wing nubs (Eyes & Horns)',
     defaultSettings: {
       baseColor: '#0c3532',
       tipColor: '#67e8f9',
@@ -85,27 +85,10 @@ export const CREATURE_MODELS = [
     }
   },
   {
-    id: 'bunny',
-    name: 'Lop Bunny',
-    icon: '🐰',
-    tagline: 'Long floppy lop ears, round dumpling cheeks, Y-nose & beaming smile',
-    defaultSettings: {
-      baseColor: '#473b64',
-      tipColor: '#fce7f3',
-      furLength: 0.32,
-      furDensity: 0.88,
-      roughness: 0.76,
-      specular: 0.22,
-      clumping: 0.38,
-      curliness: 0.42,
-      skinColor: '#2b223d'
-    }
-  },
-  {
     id: 'owlbear',
     name: 'Forest Owlbear',
     icon: '🦉',
-    tagline: 'Feathery ear tufts, concave eye discs, hooked beak & wing arms',
+    tagline: 'Giant amber eyes inside facial discs & hooked raptor beak (Eyes & Beak)',
     defaultSettings: {
       baseColor: '#1c3120',
       tipColor: '#fef08a',
@@ -119,10 +102,27 @@ export const CREATURE_MODELS = [
     }
   },
   {
+    id: 'kitsune',
+    name: 'Kitsune Fox',
+    icon: '🦊',
+    tagline: 'Fox ears, almond eyes, black nose & interactive smiling mouth (Full Face)',
+    defaultSettings: {
+      baseColor: '#8a2b0e',
+      tipColor: '#fed7aa',
+      furLength: 0.30,
+      furDensity: 0.85,
+      roughness: 0.75,
+      specular: 0.26,
+      clumping: 0.44,
+      curliness: 0.20,
+      skinColor: '#3a1309'
+    }
+  },
+  {
     id: 'teddy',
     name: 'Plush Teddy',
     icon: '🐻',
-    tagline: 'Round cup bear ears, stitched snout, button eyes & cozy smiling face',
+    tagline: 'Round bear ears, button eyes, stitched snout & smiling mouth (Full Face)',
     defaultSettings: {
       baseColor: '#482512',
       tipColor: '#fde68a',
@@ -143,34 +143,28 @@ export const CREATURE_MODELS = [
 
 const CREATURE_COORDS = {
   mochi: {
-    eyeX: 0.31, eyeY: 0.16, eyeZ: 0.95,
-    noseX: 0.0, noseY: 0.075, noseZ: 1.06,
-    mouthX: 0.0, mouthY: 0.015, mouthZ: 1.04
+    eyeX: 0.31, eyeY: 0.16, eyeZ: 0.95
+  },
+  bunny: {
+    eyeX: 0.31, eyeY: 0.15, eyeZ: 0.98,
+    noseX: 0.0, noseY: 0.04, noseZ: 1.09
+  },
+  highland: {
+    eyeX: 0.39, eyeY: 0.15, eyeZ: 0.96,
+    noseX: 0.0, noseY: -0.08, noseZ: 1.18
+  },
+  dragon: {
+    eyeX: 0.32, eyeY: 0.17, eyeZ: 0.98,
+    noseX: 0.0, noseY: 0.04, noseZ: 1.24
+  },
+  owlbear: {
+    eyeX: 0.34, eyeY: 0.16, eyeZ: 0.93,
+    noseX: 0.0, noseY: 0.03, noseZ: 1.12
   },
   kitsune: {
     eyeX: 0.31, eyeY: 0.17, eyeZ: 0.98,
     noseX: 0.0, noseY: 0.045, noseZ: 1.38,
     mouthX: 0.0, mouthY: -0.055, mouthZ: 1.33
-  },
-  highland: {
-    eyeX: 0.39, eyeY: 0.15, eyeZ: 0.96,
-    noseX: 0.0, noseY: -0.08, noseZ: 1.18,
-    mouthX: 0.0, mouthY: -0.20, mouthZ: 1.12
-  },
-  dragon: {
-    eyeX: 0.32, eyeY: 0.17, eyeZ: 0.98,
-    noseX: 0.0, noseY: 0.04, noseZ: 1.24,
-    mouthX: 0.0, mouthY: -0.06, mouthZ: 1.20
-  },
-  bunny: {
-    eyeX: 0.31, eyeY: 0.15, eyeZ: 0.98,
-    noseX: 0.0, noseY: 0.04, noseZ: 1.09,
-    mouthX: 0.0, mouthY: -0.04, mouthZ: 1.07
-  },
-  owlbear: {
-    eyeX: 0.34, eyeY: 0.16, eyeZ: 0.93,
-    noseX: 0.0, noseY: 0.03, noseZ: 1.12,
-    mouthX: 0.0, mouthY: -0.07, mouthZ: 1.08
   },
   teddy: {
     eyeX: 0.31, eyeY: 0.17, eyeZ: 0.98,
@@ -486,33 +480,42 @@ function sculptVertex(id, u, v, w) {
 function evaluateFollicleMaskFor(id, x, y, z) {
   const c = CREATURE_COORDS[id] || CREATURE_COORDS.mochi;
 
-  // 1. Absolute zero-fur zone around both eyes with a clean, generous safety radius
+  // 1. Eye clearance for all models (zero fur on corneas)
   const minEyeDist = Math.min(
     Math.hypot(x + c.eyeX, y - c.eyeY, z - c.eyeZ),
     Math.hypot(x - c.eyeX, y - c.eyeY, z - c.eyeZ)
   );
   if (minEyeDist < 0.22) {
-    return 0.0; // ZERO FUR directly on and around the eyes!
+    return 0.0;
   }
   const eyeMask = smoothstep(0.22, 0.42, minEyeDist);
 
-  // 2. Absolute zero-fur zone around the nose pad & mouth area
-  const noseDist = Math.hypot(x / 1.3, y - c.noseY, z - c.noseZ);
-  if (noseDist < 0.18) {
-    return 0.0; // ZERO FUR on the nose!
+  // 2. Nose/Muzzle clearance (only for models that have a nose, muzzle, or beak)
+  let noseMask = 1.0;
+  const hasNoseOrBeak = id === 'kitsune' || id === 'highland' || id === 'bunny' || id === 'teddy' || id === 'owlbear' || id === 'dragon';
+  if (hasNoseOrBeak && c.noseZ) {
+    const noseDist = Math.hypot(x / 1.3, y - c.noseY, z - c.noseZ);
+    if (noseDist < 0.18) {
+      return 0.0;
+    }
+    noseMask = smoothstep(0.18, 0.38, noseDist);
   }
-  const noseMask = smoothstep(0.18, 0.38, noseDist);
 
-  const mouthDist = Math.hypot(x / 1.4, y - c.mouthY, z - c.mouthZ);
-  if (mouthDist < 0.16) {
-    return 0.0; // ZERO FUR on the mouth!
+  // 3. Mouth clearance (only for models with an interactive smiling mouth)
+  let mouthMask = 1.0;
+  const hasMouth = id === 'kitsune' || id === 'teddy';
+  if (hasMouth && c.mouthZ) {
+    const mouthDist = Math.hypot(x / 1.4, y - c.mouthY, z - c.mouthZ);
+    if (mouthDist < 0.16) {
+      return 0.0;
+    }
+    mouthMask = smoothstep(0.16, 0.34, mouthDist);
   }
-  const mouthMask = smoothstep(0.16, 0.34, mouthDist);
 
-  // 3. Ground contact pad
+  // 4. Ground contact pad
   const bottomMask = smoothstep(-1.05, -0.72, y);
 
-  // 4. Model-specific fluffy zones (cheeks, bangs, crests, tails)
+  // 5. Model-specific fluffy zones (cheeks, bangs, crests, tails)
   let fluffBoost = 1.0;
   if (id === 'kitsune') {
     const cheekDist = Math.min(Math.hypot(x + 0.65, y + 0.02, z - 0.62), Math.hypot(x - 0.65, y + 0.02, z - 0.62));
@@ -569,7 +572,6 @@ function evaluateGroomFlowFor(id, x, y, z, nx, ny, nz) {
     }
   }
 
-  // Model-specific flow features
   if (id === 'kitsune' && z > 0.2) {
     fx = x * 1.35;
     fy = -0.50;
@@ -638,7 +640,7 @@ export function createCreatureGeometry(modelId, widthSegments = 96, heightSegmen
 }
 
 // =============================================================================
-// FACIAL FEATURES BUILDER (Eyes, Snouts, Horns, Beaks, Interactive Smiling Mouth)
+// FACIAL FEATURES BUILDER (Eyes Only vs Eyes+Nose vs Eyes+Beak vs Full Face)
 // =============================================================================
 
 function buildFacialFeatures(modelId, faceGroup, root) {
@@ -670,9 +672,9 @@ function buildFacialFeatures(modelId, faceGroup, root) {
   const highlightMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#ffffff') });
   const warmHighlightMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#ffe4f2') });
 
-  const eyeScale = modelId === 'owlbear' ? [1.16, 1.16, 0.72] : (modelId === 'bunny' ? [1.05, 1.12, 0.68] : [0.98, 1.08, 0.68]);
+  const eyeScale = modelId === 'owlbear' ? [1.16, 1.16, 0.72] : (modelId === 'bunny' ? [1.05, 1.12, 0.68] : (modelId === 'mochi' ? [1.02, 1.14, 0.70] : [0.98, 1.08, 0.68]));
 
-  // 1. Eyes with glossy corneas, irises, and double catchlights
+  // 1. All models have expressive, glossy 3D eyes!
   for (const side of [-1, 1]) {
     const eyePivot = new THREE.Group();
     eyePivot.position.set(side * c.eyeX, c.eyeY, c.eyeZ);
@@ -697,7 +699,7 @@ function buildFacialFeatures(modelId, faceGroup, root) {
     iris.renderOrder = 9;
     eyePivot.add(iris);
 
-    // Pupil dot (for round eyes)
+    // Round pupil
     if (modelId !== 'dragon') {
       const pupilGeo = new THREE.SphereGeometry(0.065, 18, 12);
       pupilGeo.scale(0.9, 0.95, 0.35);
@@ -707,7 +709,7 @@ function buildFacialFeatures(modelId, faceGroup, root) {
       eyePivot.add(pupil);
     }
 
-    // Main highlight
+    // Catchlights
     const catchlightMainGeo = new THREE.SphereGeometry(0.048, 16, 12);
     catchlightMainGeo.scale(1.0, 1.18, 0.32);
     const catchlightMain = new THREE.Mesh(catchlightMainGeo, highlightMat);
@@ -715,7 +717,6 @@ function buildFacialFeatures(modelId, faceGroup, root) {
     catchlightMain.renderOrder = 11;
     eyePivot.add(catchlightMain);
 
-    // Sub highlight
     const catchlightSubGeo = new THREE.SphereGeometry(0.024, 14, 10);
     catchlightSubGeo.scale(1.0, 1.0, 0.32);
     const catchlightSub = new THREE.Mesh(catchlightSubGeo, warmHighlightMat);
@@ -727,34 +728,43 @@ function buildFacialFeatures(modelId, faceGroup, root) {
     eyes.push({ pivot: eyePivot, basePos: eyePivot.position.clone(), catchlightMain, catchlightSub, side });
   }
 
-  // 2. Rosy Cheek Blush
-  const blushMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#ff5c93'), transparent: true, opacity: 0.55, depthWrite: false });
+  // 2. Rosy Cheek Blush (for Mochi, Bunny, Kitsune)
+  const hasBlush = modelId === 'mochi' || modelId === 'bunny' || modelId === 'kitsune';
+  const blushMat = hasBlush ? new THREE.MeshBasicMaterial({ color: new THREE.Color('#ff5c93'), transparent: true, opacity: 0.55, depthWrite: false }) : null;
   const blushes = [];
-  for (const side of [-1, 1]) {
-    const blushGeo = new THREE.SphereGeometry(0.12, 20, 16);
-    blushGeo.scale(1.35, 0.72, 0.35);
-    const blush = new THREE.Mesh(blushGeo, blushMat);
-    blush.position.set(side * (c.eyeX + 0.18), c.eyeY - 0.16, c.eyeZ + 0.02);
-    blush.rotation.y = side * 0.32;
-    blush.renderOrder = 8;
-    faceGroup.add(blush);
-    blushes.push(blush);
+  if (hasBlush) {
+    for (const side of [-1, 1]) {
+      const blushGeo = new THREE.SphereGeometry(0.12, 20, 16);
+      blushGeo.scale(1.35, 0.72, 0.35);
+      const blush = new THREE.Mesh(blushGeo, blushMat);
+      blush.position.set(side * (c.eyeX + 0.18), c.eyeY - 0.16, c.eyeZ + 0.02);
+      blush.rotation.y = side * 0.32;
+      blush.renderOrder = 8;
+      faceGroup.add(blush);
+      blushes.push(blush);
+    }
   }
 
-  // 3. Cute 3D Noses per model
-  let noseMesh = null;
+  // 3. Selective Noses / Horns / Beaks (NOT on Mochi which is Eyes Only!)
+  let beakMesh = null;
   switch (modelId) {
-    case 'kitsune': {
-      const noseMat = new THREE.MeshPhysicalMaterial({ color: '#111111', roughness: 0.12, clearcoat: 0.9 });
-      const noseGeo = new THREE.SphereGeometry(0.048, 16, 12);
-      noseGeo.scale(1.3, 0.85, 1.0);
-      noseMesh = new THREE.Mesh(noseGeo, noseMat);
+    case 'mochi': {
+      // EYES ONLY: No nose, no mouth! Just pure plush cloud critter!
+      break;
+    }
+    case 'bunny': {
+      // Eyes & Nose Only: Cute pink Y-cleft bunny nose
+      const noseGeo = new THREE.ConeGeometry(0.042, 0.055, 12);
+      noseGeo.scale(1.2, 0.8, 0.8);
+      const noseMesh = new THREE.Mesh(noseGeo, new THREE.MeshBasicMaterial({ color: '#ff94b8' }));
       noseMesh.position.set(c.noseX, c.noseY, c.noseZ);
+      noseMesh.rotation.x = Math.PI * 0.5;
       noseMesh.renderOrder = 9;
       faceGroup.add(noseMesh);
       break;
     }
     case 'highland': {
+      // Eyes & Muzzle Only: Wide damp cow muzzle pad + horns
       const muzzleMat = new THREE.MeshStandardMaterial({ color: '#54362a', roughness: 0.45 });
       const muzzleGeo = new THREE.CylinderGeometry(0.19, 0.23, 0.14, 20);
       muzzleGeo.scale(1.5, 0.82, 1.1);
@@ -783,6 +793,7 @@ function buildFacialFeatures(modelId, faceGroup, root) {
       break;
     }
     case 'dragon': {
+      // Eyes & Horns Only: Nostril pits + swept horns + wings
       for (const side of [-1, 1]) {
         const n = new THREE.Mesh(new THREE.SphereGeometry(0.03, 12, 10), new THREE.MeshBasicMaterial({ color: '#04100e' }));
         n.scale.set(0.8, 1.3, 0.6);
@@ -800,27 +811,30 @@ function buildFacialFeatures(modelId, faceGroup, root) {
       }
       break;
     }
-    case 'bunny': {
-      const noseGeo = new THREE.ConeGeometry(0.042, 0.055, 12);
-      noseGeo.scale(1.2, 0.8, 0.8);
-      noseMesh = new THREE.Mesh(noseGeo, new THREE.MeshBasicMaterial({ color: '#ff94b8' }));
+    case 'owlbear': {
+      // Eyes & Beak: Hooked raptor beak
+      const beakGeo = new THREE.ConeGeometry(0.07, 0.20, 16);
+      beakGeo.scale(0.85, 1.2, 1.4);
+      beakMesh = new THREE.Mesh(beakGeo, new THREE.MeshPhysicalMaterial({ color: '#111111', roughness: 0.12, clearcoat: 0.85 }));
+      beakMesh.position.set(c.noseX, c.noseY, c.noseZ);
+      beakMesh.rotation.x = Math.PI * 0.58;
+      beakMesh.renderOrder = 9;
+      faceGroup.add(beakMesh);
+      break;
+    }
+    case 'kitsune': {
+      // Full Face: Fox nose button + smiling mouth
+      const noseMat = new THREE.MeshPhysicalMaterial({ color: '#111111', roughness: 0.12, clearcoat: 0.9 });
+      const noseGeo = new THREE.SphereGeometry(0.048, 16, 12);
+      noseGeo.scale(1.3, 0.85, 1.0);
+      const noseMesh = new THREE.Mesh(noseGeo, noseMat);
       noseMesh.position.set(c.noseX, c.noseY, c.noseZ);
-      noseMesh.rotation.x = Math.PI * 0.5;
       noseMesh.renderOrder = 9;
       faceGroup.add(noseMesh);
       break;
     }
-    case 'owlbear': {
-      const beakGeo = new THREE.ConeGeometry(0.07, 0.20, 16);
-      beakGeo.scale(0.85, 1.2, 1.4);
-      const beak = new THREE.Mesh(beakGeo, new THREE.MeshPhysicalMaterial({ color: '#111111', roughness: 0.12, clearcoat: 0.85 }));
-      beak.position.set(c.noseX, c.noseY, c.noseZ);
-      beak.rotation.x = Math.PI * 0.58;
-      beak.renderOrder = 9;
-      faceGroup.add(beak);
-      break;
-    }
     case 'teddy': {
+      // Full Face: Teddy snout pad + stitched nose button + smiling mouth
       const muzzleMat = new THREE.MeshStandardMaterial({ color: '#c49a6c', roughness: 0.72 });
       const muzzleGeo = new THREE.SphereGeometry(0.18, 20, 16);
       muzzleGeo.scale(1.35, 1.05, 0.88);
@@ -831,75 +845,68 @@ function buildFacialFeatures(modelId, faceGroup, root) {
 
       const noseGeo = new THREE.SphereGeometry(0.056, 16, 12);
       noseGeo.scale(1.4, 0.85, 0.8);
-      noseMesh = new THREE.Mesh(noseGeo, new THREE.MeshPhysicalMaterial({ color: '#1a0c06', roughness: 0.15, clearcoat: 0.8 }));
+      const noseMesh = new THREE.Mesh(noseGeo, new THREE.MeshPhysicalMaterial({ color: '#1a0c06', roughness: 0.15, clearcoat: 0.8 }));
       noseMesh.position.set(c.noseX, c.noseY, c.noseZ);
       noseMesh.renderOrder = 10;
       faceGroup.add(noseMesh);
       break;
     }
-    case 'mochi':
-    default: {
-      const noseGeo = new THREE.SphereGeometry(0.048, 18, 14);
-      noseGeo.scale(1.3, 0.88, 0.75);
-      noseMesh = new THREE.Mesh(noseGeo, new THREE.MeshBasicMaterial({ color: '#ff94b8' }));
-      noseMesh.position.set(c.noseX, c.noseY, c.noseZ);
-      noseMesh.renderOrder = 9;
-      faceGroup.add(noseMesh);
-      break;
-    }
   }
 
-  // 4. Interactive Smiling Mouth Component
-  const mouthGroup = new THREE.Group();
-  mouthGroup.position.set(c.mouthX, c.mouthY, c.mouthZ);
-  mouthGroup.renderOrder = 9;
-
-  const mouthMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#3a102e') });
+  // 4. Interactive Smiling Mouth Component (Only for Kitsune and Teddy!)
+  const hasMouth = modelId === 'kitsune' || modelId === 'teddy';
+  let mouthGroup = null;
+  let mouthOpenGroup = null;
   const mouthArcs = [];
 
-  for (const side of [-1, 1]) {
-    const arcGeo = new THREE.TorusGeometry(0.046, 0.013, 10, 20, Math.PI * 0.92);
-    const arc = new THREE.Mesh(arcGeo, mouthMat);
-    arc.position.set(side * 0.043, 0, 0);
-    arc.rotation.x = Math.PI + 0.15;
-    arc.rotation.y = side * 0.14;
-    arc.renderOrder = 9;
-    mouthGroup.add(arc);
-    mouthArcs.push({ mesh: arc, baseRotZ: 0, side });
+  if (hasMouth && c.mouthZ) {
+    mouthGroup = new THREE.Group();
+    mouthGroup.position.set(c.mouthX, c.mouthY, c.mouthZ);
+    mouthGroup.renderOrder = 9;
+
+    const mouthMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#3a102e') });
+    for (const side of [-1, 1]) {
+      const arcGeo = new THREE.TorusGeometry(0.046, 0.013, 10, 20, Math.PI * 0.92);
+      const arc = new THREE.Mesh(arcGeo, mouthMat);
+      arc.position.set(side * 0.043, 0, 0);
+      arc.rotation.x = Math.PI + 0.15;
+      arc.rotation.y = side * 0.14;
+      arc.renderOrder = 9;
+      mouthGroup.add(arc);
+      mouthArcs.push({ mesh: arc, side });
+    }
+
+    mouthOpenGroup = new THREE.Group();
+    mouthOpenGroup.position.set(0, -0.02, 0.005);
+    mouthOpenGroup.scale.set(0.001, 0.001, 0.001);
+    mouthOpenGroup.renderOrder = 10;
+
+    const cavityGeo = new THREE.SphereGeometry(0.055, 16, 12);
+    cavityGeo.scale(1.15, 0.85, 0.4);
+    const cavityMesh = new THREE.Mesh(cavityGeo, new THREE.MeshBasicMaterial({ color: '#2a0c16' }));
+    cavityMesh.renderOrder = 10;
+    mouthOpenGroup.add(cavityMesh);
+
+    const tongueGeo = new THREE.SphereGeometry(0.034, 14, 10);
+    tongueGeo.scale(1.1, 0.7, 0.4);
+    const tongueMesh = new THREE.Mesh(tongueGeo, new THREE.MeshBasicMaterial({ color: '#ff6b91' }));
+    tongueMesh.position.set(0, -0.016, 0.02);
+    tongueMesh.renderOrder = 11;
+    mouthOpenGroup.add(tongueMesh);
+
+    mouthGroup.add(mouthOpenGroup);
+    faceGroup.add(mouthGroup);
   }
-
-  // Open Happy Smile Cavity with Pink Tongue (appears & expands when cursor hovers on creature!)
-  const mouthOpenGroup = new THREE.Group();
-  mouthOpenGroup.position.set(0, -0.02, 0.005);
-  mouthOpenGroup.scale.set(0.001, 0.001, 0.001); // Closed by default
-  mouthOpenGroup.renderOrder = 10;
-
-  // Dark mouth interior
-  const cavityGeo = new THREE.SphereGeometry(0.055, 16, 12);
-  cavityGeo.scale(1.15, 0.85, 0.4);
-  const cavityMesh = new THREE.Mesh(cavityGeo, new THREE.MeshBasicMaterial({ color: '#2a0c16' }));
-  cavityMesh.renderOrder = 10;
-  mouthOpenGroup.add(cavityMesh);
-
-  // Cute pink tongue
-  const tongueGeo = new THREE.SphereGeometry(0.034, 14, 10);
-  tongueGeo.scale(1.1, 0.7, 0.4);
-  const tongueMesh = new THREE.Mesh(tongueGeo, new THREE.MeshBasicMaterial({ color: '#ff6b91' }));
-  tongueMesh.position.set(0, -0.016, 0.02);
-  tongueMesh.renderOrder = 11;
-  mouthOpenGroup.add(tongueMesh);
-
-  mouthGroup.add(mouthOpenGroup);
-  faceGroup.add(mouthGroup);
 
   return {
     eyes,
     blushes,
     blushMat,
+    beakMesh,
     mouthArcs,
     mouthOpenGroup,
     mouthGroup,
-    baseMouthY: c.mouthY
+    baseMouthY: c.mouthY || 0
   };
 }
 
@@ -1172,7 +1179,7 @@ export function createCreature(modelId = 'mochi') {
       blinkScaleY = Math.min(blinkScaleY, 0.18);
     }
 
-    // 1. Eye tracking & smiling eye crescent squint
+    // 1. Eye tracking & happy squint
     const happyEyeSquint = 1.0 - sp * 0.26;
     for (const eye of facialAnim.eyes) {
       eye.pivot.scale.y = blinkScaleY * happyEyeSquint;
@@ -1181,7 +1188,7 @@ export function createCreature(modelId = 'mochi') {
       eye.catchlightMain.scale.setScalar(1.0 + sp * 0.22);
     }
 
-    // 2. Interactive Smiling Mouth: Opens and beams happily when hovered!
+    // 2. Interactive Smiling Mouth (if present on this model)
     if (facialAnim.mouthOpenGroup) {
       const openS = Math.max(0.001, sp * 1.15);
       facialAnim.mouthOpenGroup.scale.set(openS, openS, openS);
@@ -1193,7 +1200,12 @@ export function createCreature(modelId = 'mochi') {
       facialAnim.mouthGroup.position.y = facialAnim.baseMouthY + sp * 0.015;
     }
 
-    // 3. Cheeks blush glow when smiling
+    // 3. Beak chirp animation on hover (for Owlbear)
+    if (facialAnim.beakMesh) {
+      facialAnim.beakMesh.rotation.x = Math.PI * 0.58 + sp * 0.12;
+    }
+
+    // 4. Cheeks blush glow when smiling
     for (const blush of facialAnim.blushes) {
       blush.scale.setScalar(1.0 + sp * 0.28);
     }

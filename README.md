@@ -5,17 +5,19 @@ An interactive 3D WebGL2 / GPGPU fur physics and Marschner hair shading simulati
 ## ✨ Features
 
 - **100% Procedural 3D Models:** No external 3D files (GLTF/OBJ) required. All meshes, shapes, and facial features are dynamically sculpted in code.
-- **7 Unique Creatures:**
-  - 🌸 **Mochi-Puff:** Original pear blob with perky cat ears and rosy cheeks.
-  - 🦊 **Kitsune Fox:** Alert pointed fox ears, tapered snout, black nose, and flared cheek whiskers.
-  - 🐮 **Highland Calf:** Broad stocky head, curved horn nubs, droopy ears, and shaggy bangs.
-  - 🐉 **Dragon Baby:** Chibi dragon snout, swept-back horns, wing-nubs, spine crest, and reptilian slit eyes.
-  - 🐰 **Lop Bunny:** Chubby cheeks, long floppy lop ears draping downwards, Y-nose, and cotton-ball tail.
-  - 🦉 **Forest Owlbear:** Concave facial feather discs, horned ear tufts, hooked beak, and wing-arms.
-  - 🐻 **Plush Teddy:** Round cup bear ears, protruding stitched snout, and woolly fleece.
+- **7 Unique Creatures with Diverse Facial Anatomies:**
+  - 🌸 **Mochi-Puff (Eyes Only):** Mysterious plush cloud critter with huge expressive glossy anime eyes and glowing cheek blush—no nose or mouth.
+  - 🐰 **Lop Bunny (Eyes & Nose):** Chubby cheeks, long floppy lop ears, doe eyes, and a cute pink Y-cleft nose button.
+  - 🐮 **Highland Calf (Eyes & Muzzle):** Broad head, horn nubs, shaggy forehead bangs, doe eyes, and a wide damp cow muzzle with nostrils.
+  - 🐉 **Dragon Baby (Eyes & Horns):** Luminous reptilian slit eyes, swept-back horns, nostril pits, and wing-nubs.
+  - 🦉 **Forest Owlbear (Eyes & Beak):** Giant amber eyes inside facial feather discs and a hooked raptor beak that chirps on hover.
+  - 🦊 **Kitsune Fox (Full Face):** Alert pointed fox ears, almond eyes, black nose button, and an interactive smiling mouth that opens with a pink tongue on hover.
+  - 🐻 **Plush Teddy (Full Face):** Round cup bear ears, dark glass button eyes, stitched snout pad, and an interactive smiling mouth on hover.
 - **Cursor & Mouse Interactivity:**
   - **Pet & Comb:** Dragging the cursor grooms and parts the fur in real time based on pointer velocity.
-  - **Interactive Smiling Face:** Hovering the cursor over the creature causes it to smile, open its mouth with a cute pink tongue, squint happily, and blush!
+  - **Interactive Facial Expressions on Hover:**
+    - On full-face models (Kitsune, Teddy), hovering causes the mouth to curve into a happy beaming smile and open with a cute pink tongue!
+    - On eyes-only / minimal models (Mochi, Bunny, Calf, Dragon, Owlbear), hovering squints the eyes into happy joyful crescents `(^‿^)`, sparks the catchlights, blooms cheek blush, or chirps the beak!
   - **Boop & Hop:** Clicking on the creature triggers squash & stretch physics, jump recoil, and a fur shockwave.
   - **Eye & Gaze Tracking:** Glossy anime eyes track the cursor across 3D space.
   - **360° Orbit:** Full mouse/touch camera orbit controls.
