@@ -11,6 +11,31 @@ function normalize3(x, y, z) {
   return [x / l, y / l, z / l];
 }
 
+function createTaperedTube(curve, tubularSegments, baseRadius, tipRadius, radialSegments = 14) {
+  const geom = new THREE.TubeGeometry(curve, tubularSegments, baseRadius, radialSegments, false);
+  const pos = geom.attributes.position;
+  const stride = radialSegments + 1;
+  for (let i = 0; i <= tubularSegments; i++) {
+    const t = i / tubularSegments;
+    const center = curve.getPointAt(t);
+    const radiusScale = (baseRadius * (1.0 - t) + tipRadius * t) / baseRadius;
+    for (let j = 0; j <= radialSegments; j++) {
+      const idx = i * stride + j;
+      const x = pos.getX(idx);
+      const y = pos.getY(idx);
+      const z = pos.getZ(idx);
+      pos.setXYZ(
+        idx,
+        center.x + (x - center.x) * radiusScale,
+        center.y + (y - center.y) * radiusScale,
+        center.z + (z - center.z) * radiusScale
+      );
+    }
+  }
+  geom.computeVertexNormals();
+  return geom;
+}
+
 // =============================================================================
 // CREATURE DEFINITIONS & METADATA (DIVERSE FACIAL ANATOMY)
 // =============================================================================
@@ -22,117 +47,117 @@ export const CREATURE_MODELS = [
     icon: '🌸',
     tagline: 'Plush cloud critter with expressive anime eyes & glowing blush (Eyes Only)',
     defaultSettings: {
-      baseColor: '#5e2bff',
-      tipColor: '#ff9ec7',
+      baseColor: '#4c1d68',
+      tipColor: '#fbcfe8',
       furLength: 0.28,
-      furDensity: 0.75,
+      furDensity: 0.80,
       roughness: 0.77,
       specular: 0.24,
       clumping: 0.35,
       curliness: 0.23,
-      skinColor: '#4a3248'
+      skinColor: '#36154b'
     }
   },
   {
     id: 'bunny',
     name: 'Lop Bunny',
     icon: '🐰',
-    tagline: 'Long floppy ears, doe eyes & cute twitchy pink nose button (Eyes & Nose)',
+    tagline: 'Floppy lop ears with pink inner hollows, doe eyes & twitchy cleft nose (Eyes & Nose)',
     defaultSettings: {
-      baseColor: '#473b64',
-      tipColor: '#fce7f3',
-      furLength: 0.32,
-      furDensity: 0.88,
-      roughness: 0.76,
-      specular: 0.22,
-      clumping: 0.38,
-      curliness: 0.42,
-      skinColor: '#2b223d'
+      baseColor: '#54413b',
+      tipColor: '#fdf2e9',
+      furLength: 0.34,
+      furDensity: 0.90,
+      roughness: 0.74,
+      specular: 0.25,
+      clumping: 0.42,
+      curliness: 0.44,
+      skinColor: '#382b26'
     }
   },
   {
     id: 'highland',
     name: 'Highland Calf',
     icon: '🐮',
-    tagline: 'Horn nubs, shaggy bangs, doe eyes & wide damp cow muzzle (Eyes & Muzzle)',
+    tagline: 'Inward curved horns, honey bangs, doe eyes & damp bovine muzzle pad (Eyes & Muzzle)',
     defaultSettings: {
-      baseColor: '#6c3210',
-      tipColor: '#fcd34d',
-      furLength: 0.36,
-      furDensity: 0.90,
+      baseColor: '#56270b',
+      tipColor: '#f59e0b',
+      furLength: 0.38,
+      furDensity: 0.92,
       roughness: 0.82,
-      specular: 0.20,
-      clumping: 0.72,
-      curliness: 0.65,
-      skinColor: '#3d1a08'
+      specular: 0.22,
+      clumping: 0.75,
+      curliness: 0.68,
+      skinColor: '#331707'
     }
   },
   {
     id: 'dragon',
     name: 'Dragon Baby',
     icon: '🐉',
-    tagline: 'Luminous reptilian slit eyes, swept-back horns & wing nubs (Eyes & Horns)',
+    tagline: 'Reptilian slit eyes, swept-back ribbed horns & scalloped fin ears (Eyes & Horns)',
     defaultSettings: {
-      baseColor: '#0c3532',
-      tipColor: '#67e8f9',
-      furLength: 0.29,
-      furDensity: 0.82,
-      roughness: 0.72,
-      specular: 0.32,
-      clumping: 0.52,
-      curliness: 0.26,
-      skinColor: '#07201e'
+      baseColor: '#7c2d28',
+      tipColor: '#fb923c',
+      furLength: 0.30,
+      furDensity: 0.85,
+      roughness: 0.70,
+      specular: 0.34,
+      clumping: 0.55,
+      curliness: 0.28,
+      skinColor: '#451715'
     }
   },
   {
     id: 'owlbear',
-    name: 'Forest Owlbear',
+    name: 'Forest Owl',
     icon: '🦉',
-    tagline: 'Giant amber eyes inside facial discs & hooked raptor beak (Eyes & Beak)',
+    tagline: 'Layered concentric feather eye discs, amber eyes & hooked raptor beak (Eyes & Beak)',
     defaultSettings: {
-      baseColor: '#1c3120',
-      tipColor: '#fef08a',
-      furLength: 0.30,
-      furDensity: 0.86,
+      baseColor: '#1e261f',
+      tipColor: '#eab308',
+      furLength: 0.32,
+      furDensity: 0.88,
       roughness: 0.78,
       specular: 0.25,
-      clumping: 0.58,
-      curliness: 0.30,
-      skinColor: '#101d13'
+      clumping: 0.62,
+      curliness: 0.32,
+      skinColor: '#101a14'
     }
   },
   {
     id: 'kitsune',
     name: 'Kitsune Fox',
     icon: '🦊',
-    tagline: 'Fox ears, almond eyes, black nose & interactive smiling mouth (Full Face)',
+    tagline: 'White cheek ruffs, eyebrow spots, alert black-tipped ears & smiling mouth (Full Face)',
     defaultSettings: {
-      baseColor: '#8a2b0e',
-      tipColor: '#fed7aa',
-      furLength: 0.30,
-      furDensity: 0.85,
-      roughness: 0.75,
-      specular: 0.26,
-      clumping: 0.44,
-      curliness: 0.20,
-      skinColor: '#3a1309'
+      baseColor: '#6c220a',
+      tipColor: '#ea580c',
+      furLength: 0.32,
+      furDensity: 0.88,
+      roughness: 0.74,
+      specular: 0.28,
+      clumping: 0.46,
+      curliness: 0.22,
+      skinColor: '#431407'
     }
   },
   {
     id: 'teddy',
     name: 'Plush Teddy',
     icon: '🐻',
-    tagline: 'Round bear ears, button eyes, stitched snout & smiling mouth (Full Face)',
+    tagline: 'Biscuit-beige muzzle dome, stitched button nose & smiling mouth (Full Face)',
     defaultSettings: {
-      baseColor: '#482512',
-      tipColor: '#fde68a',
-      furLength: 0.32,
-      furDensity: 0.92,
+      baseColor: '#452310',
+      tipColor: '#fde047',
+      furLength: 0.34,
+      furDensity: 0.94,
       roughness: 0.80,
       specular: 0.22,
-      clumping: 0.66,
-      curliness: 0.54,
-      skinColor: '#291409'
+      clumping: 0.68,
+      curliness: 0.58,
+      skinColor: '#281308'
     }
   }
 ];
@@ -596,6 +621,157 @@ function evaluateGroomFlowFor(id, x, y, z, nx, ny, nz) {
 }
 
 // =============================================================================
+// ANATOMICAL COLOR ZONING FOR EACH CREATURE
+// =============================================================================
+
+function evaluateZoneColorFor(id, x, y, z) {
+  const c = CREATURE_COORDS[id] || CREATURE_COORDS.mochi;
+
+  switch (id) {
+    case 'kitsune': {
+      // 1. Two distinct white circular eyebrow spots (Maro marks)
+      const leftBrowDist = Math.hypot(x + (c.eyeX - 0.04), y - (c.eyeY + 0.22), z - (c.eyeZ + 0.02));
+      const rightBrowDist = Math.hypot(x - (c.eyeX - 0.04), y - (c.eyeY + 0.22), z - (c.eyeZ + 0.02));
+      const browDist = Math.min(leftBrowDist, rightBrowDist);
+      if (browDist < 0.14) {
+        const w = 1.0 - smoothstep(0.06, 0.14, browDist);
+        return [1.0, 0.98, 0.96, w];
+      }
+
+      // 2. Flared white cheek ruffs on left and right sides
+      const leftCheekDist = Math.hypot(x + 0.65, y + 0.02, z - 0.55);
+      const rightCheekDist = Math.hypot(x - 0.65, y + 0.02, z - 0.55);
+      const cheekDist = Math.min(leftCheekDist, rightCheekDist);
+      if (cheekDist < 0.48 && z > 0.05) {
+        const w = (1.0 - smoothstep(0.15, 0.48, cheekDist)) * 0.98;
+        return [1.0, 0.98, 0.95, w];
+      }
+
+      // 3. White muzzle bib & chin undercoat
+      if (z > 0.35 && y < 0.10 && Math.abs(x) < 0.35) {
+        const muzzleDist = Math.hypot(x / 1.15, y + 0.06, z - 1.1);
+        const w = (1.0 - smoothstep(0.08, 0.45, muzzleDist)) * 0.96;
+        if (w > 0.01) return [1.0, 0.98, 0.96, w];
+      }
+
+      // 4. Black / dark espresso fox ear tips
+      if (y > 0.90 && Math.abs(x) > 0.30) {
+        const earTipH = smoothstep(0.90, 1.25, y);
+        return [0.06, 0.04, 0.04, earTipH * 0.95];
+      }
+
+      // 5. White belly patch
+      if (y < -0.15 && z > 0.45 && Math.abs(x) < 0.40) {
+        const bellyW = smoothstep(0.45, 0.75, z) * (1.0 - smoothstep(0.0, 0.40, Math.abs(x))) * 0.88;
+        return [0.98, 0.96, 0.94, bellyW];
+      }
+      break;
+    }
+
+    case 'owlbear': {
+      // Intricate concentric feather discs around eyes!
+      const dL = Math.hypot(x + c.eyeX, y - c.eyeY, z - c.eyeZ);
+      const dR = Math.hypot(x - c.eyeX, y - c.eyeY, z - c.eyeZ);
+      const dEye = Math.min(dL, dR);
+
+      if (dEye < 0.34) {
+        // Inner disc: soft warm cream plumage
+        const w = smoothstep(0.18, 0.24, dEye) * (1.0 - smoothstep(0.30, 0.34, dEye));
+        if (w > 0.01) return [0.96, 0.92, 0.80, w * 0.98];
+      } else if (dEye < 0.48) {
+        // Mid disc: vibrant golden ochre plumage
+        const w = (1.0 - Math.abs(dEye - 0.41) / 0.07);
+        if (w > 0.01) return [0.88, 0.60, 0.16, Math.min(1.0, Math.max(0.0, w)) * 0.95];
+      } else if (dEye < 0.64) {
+        // Outer disc rim: deep espresso plumage
+        const w = (1.0 - Math.abs(dEye - 0.56) / 0.08);
+        if (w > 0.01) return [0.10, 0.07, 0.05, Math.min(1.0, Math.max(0.0, w)) * 0.94];
+      }
+
+      // Chevron chest feather plumage
+      if (z > 0.45 && y < 0.12 && y > -0.65) {
+        const chevron = Math.abs(Math.abs(x) - Math.abs(y * 0.45));
+        if (chevron < 0.16) {
+          const w = (1.0 - chevron / 0.16) * 0.78;
+          return [0.95, 0.92, 0.86, w];
+        }
+      }
+      break;
+    }
+
+    case 'highland': {
+      // 1. Honey / golden fringe bangs cascading over forehead
+      if (y > 0.14 && y < 0.65 && z > 0.42 && Math.abs(x) < 0.44) {
+        const bangDist = Math.hypot(x / 1.2, (y - 0.38) / 1.5, z - 0.85);
+        const w = (1.0 - smoothstep(0.10, 0.52, bangDist)) * 0.94;
+        if (w > 0.01) return [0.98, 0.84, 0.42, w];
+      }
+      // 2. Warm soft tan on the lower muzzle
+      if (y < 0.05 && y > -0.38 && z > 0.65 && Math.abs(x) < 0.48) {
+        const muzzleW = (1.0 - smoothstep(0.0, 0.48, Math.abs(x))) * 0.72;
+        return [0.86, 0.68, 0.54, muzzleW];
+      }
+      break;
+    }
+
+    case 'teddy': {
+      // Biscuit-beige muzzle dome
+      const snoutDist = Math.hypot(x / 1.25, (y + 0.06) / 1.1, z - 1.05);
+      if (snoutDist < 0.44) {
+        const w = (1.0 - smoothstep(0.18, 0.44, snoutDist)) * 0.96;
+        return [0.90, 0.78, 0.62, w];
+      }
+      // Inner cup of teddy bear ears
+      if (y > 0.75 && Math.abs(x) > 0.42 && z > -0.1) {
+        return [0.88, 0.75, 0.58, 0.82];
+      }
+      break;
+    }
+
+    case 'dragon': {
+      // 1. Coral / peach spiky crest along midline
+      if (Math.abs(x) < 0.22 && (z < 0.25 || y > 0.5)) {
+        const ridgeW = (1.0 - Math.abs(x) / 0.22) * 0.90;
+        return [0.96, 0.38, 0.32, ridgeW];
+      }
+      // 2. Ivory chest bib / underbelly
+      if (z > 0.50 && y < 0.05 && Math.abs(x) < 0.35) {
+        const bibW = (1.0 - smoothstep(0.0, 0.35, Math.abs(x))) * 0.88;
+        return [0.98, 0.94, 0.86, bibW];
+      }
+      break;
+    }
+
+    case 'bunny': {
+      // 1. Soft baby pink inner ear folds
+      if (Math.abs(x) > 0.62 && y < 0.18 && y > -0.55 && z > 0.0) {
+        const earW = smoothstep(0.62, 0.85, Math.abs(x)) * (1.0 - smoothstep(-0.55, 0.18, y));
+        return [0.98, 0.78, 0.85, earW * 0.88];
+      }
+      // 2. Snow white chin & tummy bib
+      if (y < -0.10 && z > 0.55 && Math.abs(x) < 0.34) {
+        const bibW = (1.0 - smoothstep(0.0, 0.34, Math.abs(x))) * 0.80;
+        return [0.98, 0.98, 0.98, bibW];
+      }
+      break;
+    }
+
+    case 'mochi': {
+      const cheekL = Math.hypot(x + 0.5, y + 0.02, z - 0.7);
+      const cheekR = Math.hypot(x - 0.5, y + 0.02, z - 0.7);
+      const dCheek = Math.min(cheekL, cheekR);
+      if (dCheek < 0.40) {
+        const w = (1.0 - dCheek / 0.40) * 0.68;
+        return [1.0, 0.72, 0.88, w];
+      }
+      break;
+    }
+  }
+
+  return [0.0, 0.0, 0.0, 0.0];
+}
+
+// =============================================================================
 // GEOMETRY GENERATOR
 // =============================================================================
 
@@ -617,6 +793,7 @@ export function createCreatureGeometry(modelId, widthSegments = 96, heightSegmen
   const normAttr = geom.attributes.normal;
   const follicleMaskArray = new Float32Array(count);
   const groomTangentArray = new Float32Array(count * 3);
+  const zoneColorArray = new Float32Array(count * 4);
 
   for (let i = 0; i < count; i++) {
     const x = posAttr.getX(i);
@@ -631,10 +808,17 @@ export function createCreatureGeometry(modelId, widthSegments = 96, heightSegmen
     groomTangentArray[i * 3] = tx;
     groomTangentArray[i * 3 + 1] = ty;
     groomTangentArray[i * 3 + 2] = tz;
+
+    const [zr, zg, zb, zw] = evaluateZoneColorFor(modelId, x, y, z);
+    zoneColorArray[i * 4] = zr;
+    zoneColorArray[i * 4 + 1] = zg;
+    zoneColorArray[i * 4 + 2] = zb;
+    zoneColorArray[i * 4 + 3] = zw;
   }
 
   geom.setAttribute('aFollicleMask', new THREE.BufferAttribute(follicleMaskArray, 1));
   geom.setAttribute('aGroomTangent', new THREE.BufferAttribute(groomTangentArray, 3));
+  geom.setAttribute('aZoneColor', new THREE.BufferAttribute(zoneColorArray, 4));
 
   return geom;
 }
@@ -749,81 +933,319 @@ function buildFacialFeatures(modelId, faceGroup, root) {
   let beakMesh = null;
   switch (modelId) {
     case 'mochi': {
-      // EYES ONLY: No nose, no mouth! Just pure plush cloud critter!
+      // EYES ONLY: Pure plush cloud critter with expressive anime eyes & glowing blush!
       break;
     }
     case 'bunny': {
-      // Eyes & Nose Only: Cute pink Y-cleft bunny nose
-      const noseGeo = new THREE.ConeGeometry(0.042, 0.055, 12);
-      noseGeo.scale(1.2, 0.8, 0.8);
-      const noseMesh = new THREE.Mesh(noseGeo, new THREE.MeshBasicMaterial({ color: '#ff94b8' }));
+      // Eyes & Nose: Cute pink cleft nose & long floppy lop ears with baby-pink inner lining
+      const noseGeo = new THREE.ConeGeometry(0.045, 0.058, 14);
+      noseGeo.scale(1.25, 0.85, 0.75);
+      const noseMesh = new THREE.Mesh(noseGeo, new THREE.MeshPhysicalMaterial({ color: '#f472b6', roughness: 0.25, clearcoat: 0.7 }));
       noseMesh.position.set(c.noseX, c.noseY, c.noseZ);
       noseMesh.rotation.x = Math.PI * 0.5;
       noseMesh.renderOrder = 9;
       faceGroup.add(noseMesh);
+
+      const cleftGeo = new THREE.CylinderGeometry(0.006, 0.006, 0.04, 6);
+      const cleft = new THREE.Mesh(cleftGeo, new THREE.MeshBasicMaterial({ color: '#be185d' }));
+      cleft.position.set(c.noseX, c.noseY - 0.025, c.noseZ + 0.01);
+      cleft.renderOrder = 10;
+      faceGroup.add(cleft);
+
+      // Long heavy floppy lop ears
+      for (const side of [-1, 1]) {
+        const earGroup = new THREE.Group();
+        earGroup.position.set(side * 0.62, 0.42, 0.08);
+        earGroup.rotation.z = side * 0.15;
+        earGroup.renderOrder = 8;
+
+        const earCurve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(0, 0, 0),
+          new THREE.Vector3(side * 0.16, -0.22, 0.04),
+          new THREE.Vector3(side * 0.24, -0.52, 0.08),
+          new THREE.Vector3(side * 0.20, -0.78, 0.12),
+          new THREE.Vector3(side * 0.12, -0.98, 0.10)
+        ]);
+        const earGeo = createTaperedTube(earCurve, 24, 0.13, 0.075, 14);
+        const earMesh = new THREE.Mesh(earGeo, new THREE.MeshStandardMaterial({ color: '#54413b', roughness: 0.82 }));
+        earMesh.renderOrder = 8;
+        earGroup.add(earMesh);
+
+        // Soft pink inner ear hollow lining
+        const innerCurve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(side * 0.04, -0.12, 0.06),
+          new THREE.Vector3(side * 0.18, -0.38, 0.10),
+          new THREE.Vector3(side * 0.16, -0.68, 0.12)
+        ]);
+        const innerGeo = createTaperedTube(innerCurve, 16, 0.08, 0.04, 12);
+        const innerMesh = new THREE.Mesh(innerGeo, new THREE.MeshBasicMaterial({ color: '#fbcfe8' }));
+        innerMesh.renderOrder = 9;
+        earGroup.add(innerMesh);
+
+        faceGroup.add(earGroup);
+      }
       break;
     }
     case 'highland': {
-      // Eyes & Muzzle Only: Wide damp cow muzzle pad + horns
-      const muzzleMat = new THREE.MeshStandardMaterial({ color: '#54362a', roughness: 0.45 });
-      const muzzleGeo = new THREE.CylinderGeometry(0.19, 0.23, 0.14, 20);
-      muzzleGeo.scale(1.5, 0.82, 1.1);
+      // Eyes & Muzzle: Inward curved horns, droopy furry ears, damp cow muzzle pad & nostrils
+      const muzzleMat = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color('#4c2e22'),
+        roughness: 0.35,
+        clearcoat: 0.7,
+        clearcoatRoughness: 0.15
+      });
+      const muzzleGeo = new THREE.CylinderGeometry(0.22, 0.26, 0.16, 24);
+      muzzleGeo.scale(1.65, 0.88, 1.15);
       const muzzle = new THREE.Mesh(muzzleGeo, muzzleMat);
       muzzle.position.set(c.noseX, c.noseY, c.noseZ);
-      muzzle.rotation.x = Math.PI * 0.35;
+      muzzle.rotation.x = Math.PI * 0.36;
       muzzle.renderOrder = 9;
       faceGroup.add(muzzle);
 
+      // Philtrum vertical groove
+      const philtrumGeo = new THREE.CylinderGeometry(0.012, 0.012, 0.14, 8);
+      const philtrum = new THREE.Mesh(philtrumGeo, new THREE.MeshBasicMaterial({ color: '#25140d' }));
+      philtrum.position.set(0, c.noseY, c.noseZ + 0.11);
+      philtrum.rotation.x = Math.PI * 0.36;
+      philtrum.renderOrder = 10;
+      faceGroup.add(philtrum);
+
+      // Deep sculpted nostril cavities with dark interiors
       for (const side of [-1, 1]) {
-        const nostril = new THREE.Mesh(new THREE.SphereGeometry(0.038, 12, 10), new THREE.MeshBasicMaterial({ color: '#180c06' }));
-        nostril.scale.set(1.3, 0.8, 0.5);
-        nostril.position.set(side * 0.13, c.noseY + 0.02, c.noseZ + 0.09);
+        const nostril = new THREE.Mesh(
+          new THREE.SphereGeometry(0.044, 16, 12),
+          new THREE.MeshBasicMaterial({ color: '#160a04' })
+        );
+        nostril.scale.set(1.4, 0.75, 0.45);
+        nostril.position.set(side * 0.16, c.noseY + 0.02, c.noseZ + 0.10);
         nostril.renderOrder = 10;
         faceGroup.add(nostril);
       }
 
+      // Elegant inward-curved Scottish Highland horns!
       for (const side of [-1, 1]) {
-        const horn = new THREE.Mesh(new THREE.ConeGeometry(0.065, 0.32, 16), new THREE.MeshStandardMaterial({ color: '#e8dcbe', roughness: 0.3 }));
-        horn.position.set(side * 0.52, 0.70, 0.02);
-        horn.rotation.z = -side * 0.75;
-        horn.rotation.x = 0.22;
-        horn.renderOrder = 8;
-        faceGroup.add(horn);
+        const hornCurve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(side * 0.44, 0.60, 0.05),
+          new THREE.Vector3(side * 0.70, 0.72, 0.08),
+          new THREE.Vector3(side * 0.84, 0.94, 0.04),
+          new THREE.Vector3(side * 0.74, 1.14, -0.02),
+          new THREE.Vector3(side * 0.54, 1.22, -0.06)
+        ]);
+        const hornGeo = createTaperedTube(hornCurve, 28, 0.082, 0.014, 16);
+        const hornMat = new THREE.MeshPhysicalMaterial({
+          color: new THREE.Color('#f0e6ce'),
+          roughness: 0.28,
+          metalness: 0.04,
+          clearcoat: 0.5,
+          clearcoatRoughness: 0.2
+        });
+        const hornMesh = new THREE.Mesh(hornGeo, hornMat);
+        hornMesh.renderOrder = 9;
+        faceGroup.add(hornMesh);
+
+        // Horn growth rings at base
+        const ringGeo = new THREE.TorusGeometry(0.086, 0.018, 10, 20);
+        const ringMesh = new THREE.Mesh(ringGeo, new THREE.MeshStandardMaterial({ color: '#543b23', roughness: 0.6 }));
+        ringMesh.position.set(side * 0.45, 0.61, 0.05);
+        ringMesh.rotation.y = side * 0.35;
+        ringMesh.rotation.z = -side * 0.5;
+        ringMesh.renderOrder = 9;
+        faceGroup.add(ringMesh);
+
+        // Droopy furry calf ears under horns
+        const earGroup = new THREE.Group();
+        earGroup.position.set(side * 0.68, 0.44, 0.06);
+        earGroup.rotation.z = side * 0.45;
+        earGroup.rotation.y = side * 0.32;
+        earGroup.rotation.x = -0.15;
+
+        const outerEarGeo = new THREE.SphereGeometry(0.18, 18, 14);
+        outerEarGeo.scale(1.3, 0.58, 0.45);
+        const outerEar = new THREE.Mesh(outerEarGeo, new THREE.MeshStandardMaterial({ color: '#56270b', roughness: 0.8 }));
+        outerEar.renderOrder = 8;
+        earGroup.add(outerEar);
+
+        const innerEarGeo = new THREE.SphereGeometry(0.14, 16, 12);
+        innerEarGeo.scale(1.15, 0.45, 0.25);
+        const innerEar = new THREE.Mesh(innerEarGeo, new THREE.MeshBasicMaterial({ color: '#e8a598' }));
+        innerEar.position.set(0, 0, 0.06);
+        innerEar.renderOrder = 9;
+        earGroup.add(innerEar);
+
+        faceGroup.add(earGroup);
       }
       break;
     }
     case 'dragon': {
-      // Eyes & Horns Only: Nostril pits + swept horns + wings
+      // Eyes & Horns: Nostril pits + swept-back ribbed horns + scalloped fin ears
       for (const side of [-1, 1]) {
-        const n = new THREE.Mesh(new THREE.SphereGeometry(0.03, 12, 10), new THREE.MeshBasicMaterial({ color: '#04100e' }));
-        n.scale.set(0.8, 1.3, 0.6);
+        const n = new THREE.Mesh(new THREE.SphereGeometry(0.032, 14, 10), new THREE.MeshBasicMaterial({ color: '#160806' }));
+        n.scale.set(0.75, 1.35, 0.5);
         n.position.set(side * 0.08, c.noseY, c.noseZ);
         n.renderOrder = 10;
         faceGroup.add(n);
       }
+
       for (const side of [-1, 1]) {
-        const horn = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.58, 18), new THREE.MeshPhysicalMaterial({ color: '#e2e8f0', roughness: 0.15, clearcoat: 0.9 }));
-        horn.position.set(side * 0.38, 0.80, -0.32);
-        horn.rotation.x = -Math.PI * 0.38;
-        horn.rotation.z = -side * 0.28;
-        horn.renderOrder = 8;
+        const dragonHornCurve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(side * 0.32, 0.70, -0.12),
+          new THREE.Vector3(side * 0.44, 0.92, -0.36),
+          new THREE.Vector3(side * 0.48, 1.12, -0.65),
+          new THREE.Vector3(side * 0.40, 1.25, -0.92)
+        ]);
+        const hornGeo = createTaperedTube(dragonHornCurve, 28, 0.088, 0.014, 16);
+        const hornMat = new THREE.MeshPhysicalMaterial({
+          color: new THREE.Color('#fdf2f0'),
+          roughness: 0.18,
+          clearcoat: 0.95,
+          clearcoatRoughness: 0.08
+        });
+        const horn = new THREE.Mesh(hornGeo, hornMat);
+        horn.renderOrder = 9;
         faceGroup.add(horn);
+
+        // Decorative ribbed horn rings
+        for (let r = 0; r < 3; r++) {
+          const tRing = 0.22 + r * 0.24;
+          const pt = dragonHornCurve.getPointAt(tRing);
+          const ringGeo = new THREE.TorusGeometry(0.075 * (1.0 - tRing * 0.6), 0.014, 8, 16);
+          const ring = new THREE.Mesh(ringGeo, new THREE.MeshPhysicalMaterial({ color: '#fb923c', roughness: 0.2, clearcoat: 0.8 }));
+          ring.position.copy(pt);
+          ring.lookAt(dragonHornCurve.getPointAt(tRing + 0.05));
+          ring.renderOrder = 10;
+          faceGroup.add(ring);
+        }
+
+        // Scalloped webbed fin ears
+        const earGroup = new THREE.Group();
+        earGroup.position.set(side * 0.72, 0.38, 0.08);
+        earGroup.rotation.y = side * 0.42;
+        earGroup.rotation.z = -side * 0.25;
+        earGroup.renderOrder = 9;
+
+        for (let r = 0; r < 3; r++) {
+          const angle = -0.45 + r * 0.45;
+          const rayLen = 0.32 - Math.abs(r - 1) * 0.05;
+          const rayGeo = new THREE.ConeGeometry(0.018, rayLen, 10);
+          rayGeo.translate(0, rayLen * 0.5, 0);
+          const ray = new THREE.Mesh(rayGeo, new THREE.MeshPhysicalMaterial({ color: '#f87171', roughness: 0.3, clearcoat: 0.8 }));
+          ray.rotation.z = side * angle;
+          ray.renderOrder = 9;
+          earGroup.add(ray);
+        }
+
+        const webGeo = new THREE.CircleGeometry(0.28, 16, 0, Math.PI * 0.75);
+        webGeo.scale(side, 1.0, 1.0);
+        const webMat = new THREE.MeshPhysicalMaterial({
+          color: new THREE.Color('#fca5a5'),
+          roughness: 0.35,
+          transmission: 0.4,
+          opacity: 0.82,
+          transparent: true,
+          side: THREE.DoubleSide
+        });
+        const web = new THREE.Mesh(webGeo, webMat);
+        web.position.set(0, 0.04, 0.01);
+        web.renderOrder = 9;
+        earGroup.add(web);
+
+        faceGroup.add(earGroup);
       }
       break;
     }
     case 'owlbear': {
-      // Eyes & Beak: Hooked raptor beak
-      const beakGeo = new THREE.ConeGeometry(0.07, 0.20, 16);
-      beakGeo.scale(0.85, 1.2, 1.4);
-      beakMesh = new THREE.Mesh(beakGeo, new THREE.MeshPhysicalMaterial({ color: '#111111', roughness: 0.12, clearcoat: 0.85 }));
-      beakMesh.position.set(c.noseX, c.noseY, c.noseZ);
-      beakMesh.rotation.x = Math.PI * 0.58;
+      // Eyes & Beak: Concentric 3D feather discs around eyes, hooked raptor beak, brow tufts
+      for (const side of [-1, 1]) {
+        const discGroup = new THREE.Group();
+        discGroup.position.set(side * c.eyeX, c.eyeY, c.eyeZ - 0.02);
+        discGroup.rotation.y = side * 0.22;
+        discGroup.renderOrder = 7;
+
+        // Inner cream ring
+        const innerRingGeo = new THREE.TorusGeometry(0.21, 0.022, 12, 28);
+        const innerRing = new THREE.Mesh(innerRingGeo, new THREE.MeshStandardMaterial({ color: '#f5edd6', roughness: 0.7 }));
+        innerRing.renderOrder = 7;
+        discGroup.add(innerRing);
+
+        // Mid ochre ring
+        const midRingGeo = new THREE.TorusGeometry(0.26, 0.028, 12, 32);
+        const midRing = new THREE.Mesh(midRingGeo, new THREE.MeshStandardMaterial({ color: '#d97706', roughness: 0.65 }));
+        midRing.renderOrder = 7;
+        discGroup.add(midRing);
+
+        // Outer dark plumage rim
+        const outerRingGeo = new THREE.TorusGeometry(0.32, 0.032, 12, 36);
+        const outerRing = new THREE.Mesh(outerRingGeo, new THREE.MeshStandardMaterial({ color: '#140c06', roughness: 0.85 }));
+        outerRing.renderOrder = 7;
+        discGroup.add(outerRing);
+
+        // Owl feather horn tufts on top brow
+        const tuftGeo = new THREE.ConeGeometry(0.045, 0.24, 12);
+        tuftGeo.scale(1.2, 1.0, 0.4);
+        const tuft = new THREE.Mesh(tuftGeo, new THREE.MeshStandardMaterial({ color: '#2b1b11', roughness: 0.8 }));
+        tuft.position.set(side * 0.08, 0.32, 0.02);
+        tuft.rotation.z = -side * 0.38;
+        tuft.rotation.x = -0.15;
+        tuft.renderOrder = 8;
+        discGroup.add(tuft);
+
+        faceGroup.add(discGroup);
+      }
+
+      // Hooked raptor beak
+      const beakCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(c.noseX, c.noseY + 0.12, c.noseZ - 0.05),
+        new THREE.Vector3(c.noseX, c.noseY + 0.04, c.noseZ + 0.08),
+        new THREE.Vector3(c.noseX, c.noseY - 0.06, c.noseZ + 0.14),
+        new THREE.Vector3(c.noseX, c.noseY - 0.18, c.noseZ + 0.11)
+      ]);
+      const beakGeo = createTaperedTube(beakCurve, 20, 0.068, 0.012, 14);
+      beakMesh = new THREE.Mesh(beakGeo, new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color('#101014'),
+        roughness: 0.14,
+        clearcoat: 0.92,
+        clearcoatRoughness: 0.06
+      }));
       beakMesh.renderOrder = 9;
       faceGroup.add(beakMesh);
       break;
     }
     case 'kitsune': {
-      // Full Face: Fox nose button + smiling mouth
+      // Full Face: White 3D eyebrow spots, sculpted cream muzzle wedge, tiered cheek ruffs, nose & smiling mouth
+      for (const side of [-1, 1]) {
+        const browGeo = new THREE.SphereGeometry(0.055, 16, 12);
+        browGeo.scale(1.25, 0.85, 0.45);
+        const brow = new THREE.Mesh(browGeo, new THREE.MeshBasicMaterial({ color: '#ffffff' }));
+        brow.position.set(side * (c.eyeX - 0.04), c.eyeY + 0.22, c.eyeZ + 0.02);
+        brow.rotation.z = -side * 0.18;
+        brow.renderOrder = 10;
+        faceGroup.add(brow);
+      }
+
+      const muzzleWedgeGeo = new THREE.ConeGeometry(0.18, 0.36, 18);
+      muzzleWedgeGeo.scale(1.3, 0.72, 1.0);
+      const muzzleWedge = new THREE.Mesh(muzzleWedgeGeo, new THREE.MeshStandardMaterial({ color: '#fffbf5', roughness: 0.85 }));
+      muzzleWedge.position.set(c.noseX, c.noseY - 0.04, c.noseZ - 0.12);
+      muzzleWedge.rotation.x = Math.PI * 0.52;
+      muzzleWedge.renderOrder = 8;
+      faceGroup.add(muzzleWedge);
+
+      for (const side of [-1, 1]) {
+        const ruffGroup = new THREE.Group();
+        ruffGroup.position.set(side * 0.74, 0.0, 0.48);
+        ruffGroup.rotation.y = side * 0.55;
+        ruffGroup.renderOrder = 8;
+        for (let t = 0; t < 3; t++) {
+          const tuftGeo = new THREE.ConeGeometry(0.05, 0.22 - t * 0.03, 10);
+          tuftGeo.scale(1.4, 1.0, 0.5);
+          const tuft = new THREE.Mesh(tuftGeo, new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.85 }));
+          tuft.position.set(0, (t - 1) * 0.09, 0);
+          tuft.rotation.z = side * (0.65 - t * 0.2);
+          ruffGroup.add(tuft);
+        }
+        faceGroup.add(ruffGroup);
+      }
+
       const noseMat = new THREE.MeshPhysicalMaterial({ color: '#111111', roughness: 0.12, clearcoat: 0.9 });
       const noseGeo = new THREE.SphereGeometry(0.048, 16, 12);
       noseGeo.scale(1.3, 0.85, 1.0);
@@ -834,21 +1256,48 @@ function buildFacialFeatures(modelId, faceGroup, root) {
       break;
     }
     case 'teddy': {
-      // Full Face: Teddy snout pad + stitched nose button + smiling mouth
-      const muzzleMat = new THREE.MeshStandardMaterial({ color: '#c49a6c', roughness: 0.72 });
-      const muzzleGeo = new THREE.SphereGeometry(0.18, 20, 16);
-      muzzleGeo.scale(1.35, 1.05, 0.88);
+      // Full Face: Biscuit-beige muzzle dome + stitched nose & philtrum + round cup ears + smiling mouth
+      const muzzleMat = new THREE.MeshStandardMaterial({ color: '#cf9c6b', roughness: 0.78 });
+      const muzzleGeo = new THREE.SphereGeometry(0.24, 24, 20);
+      muzzleGeo.scale(1.42, 1.05, 0.92);
       const muzzle = new THREE.Mesh(muzzleGeo, muzzleMat);
-      muzzle.position.set(c.noseX, c.noseY - 0.08, c.noseZ - 0.10);
+      muzzle.position.set(c.noseX, c.noseY - 0.07, c.noseZ - 0.08);
       muzzle.renderOrder = 9;
       faceGroup.add(muzzle);
 
-      const noseGeo = new THREE.SphereGeometry(0.056, 16, 12);
-      noseGeo.scale(1.4, 0.85, 0.8);
-      const noseMesh = new THREE.Mesh(noseGeo, new THREE.MeshPhysicalMaterial({ color: '#1a0c06', roughness: 0.15, clearcoat: 0.8 }));
-      noseMesh.position.set(c.noseX, c.noseY, c.noseZ);
+      const noseGeo = new THREE.SphereGeometry(0.058, 16, 12);
+      noseGeo.scale(1.4, 0.82, 0.65);
+      const noseMesh = new THREE.Mesh(noseGeo, new THREE.MeshPhysicalMaterial({ color: '#1a0c06', roughness: 0.25, clearcoat: 0.6 }));
+      noseMesh.position.set(c.noseX, c.noseY, c.noseZ + 0.02);
       noseMesh.renderOrder = 10;
       faceGroup.add(noseMesh);
+
+      const stitchGeo = new THREE.CylinderGeometry(0.008, 0.008, 0.075, 8);
+      const stitch = new THREE.Mesh(stitchGeo, new THREE.MeshBasicMaterial({ color: '#2a1208' }));
+      stitch.position.set(c.noseX, c.noseY - 0.045, c.noseZ + 0.02);
+      stitch.renderOrder = 10;
+      faceGroup.add(stitch);
+
+      for (const side of [-1, 1]) {
+        const earGroup = new THREE.Group();
+        earGroup.position.set(side * 0.58, 0.82, 0.08);
+        earGroup.rotation.y = side * 0.25;
+        earGroup.renderOrder = 8;
+
+        const outerCupGeo = new THREE.SphereGeometry(0.18, 18, 14);
+        outerCupGeo.scale(1.0, 1.0, 0.55);
+        const outerCup = new THREE.Mesh(outerCupGeo, new THREE.MeshStandardMaterial({ color: '#452310', roughness: 0.85 }));
+        earGroup.add(outerCup);
+
+        const innerCupGeo = new THREE.SphereGeometry(0.13, 16, 12);
+        innerCupGeo.scale(0.9, 0.9, 0.35);
+        const innerCup = new THREE.Mesh(innerCupGeo, new THREE.MeshBasicMaterial({ color: '#cf9c6b' }));
+        innerCup.position.set(0, 0, 0.05);
+        innerCup.renderOrder = 9;
+        earGroup.add(innerCup);
+
+        faceGroup.add(earGroup);
+      }
       break;
     }
   }

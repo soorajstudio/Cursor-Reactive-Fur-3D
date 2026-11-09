@@ -43,7 +43,8 @@ const COMMON_HAIR_BSDF_GLSL = /* glsl */ `
     vec3 hairTangent,
     float h,
     float strandSeed,
-    float combMemory
+    float combMemory,
+    vec4 zoneColor
   ) {
     vec3 N = normalize(surfNormal);
     vec3 T = normalize(hairTangent);
@@ -51,10 +52,13 @@ const COMMON_HAIR_BSDF_GLSL = /* glsl */ `
     vec3 L = normalize(uKeyLightDir);
     vec3 Lrim = normalize(uRimLightDir);
 
-    // 1. Root-to-Tip Melanin / Pigment Gradient with per-strand micro-variation
+    // 1. Root-to-Tip Melanin / Pigment Gradient with per-strand micro-variation & anatomical color zoning
     float rootTipMix = smoothstep(0.05, 0.92, pow(h, 0.82));
     vec3 strandTint = mix(vec3(0.92), vec3(1.08), fract(strandSeed * 13.37));
-    vec3 albedo = mix(uBaseColor, uTipColor, rootTipMix) * strandTint;
+    float zoneWeight = clamp(zoneColor.a, 0.0, 1.0);
+    vec3 effectiveBase = mix(uBaseColor, zoneColor.rgb * 0.72, zoneWeight);
+    vec3 effectiveTip = mix(uTipColor, zoneColor.rgb * 1.10, zoneWeight);
+    vec3 albedo = mix(effectiveBase, effectiveTip, rootTipMix) * strandTint;
 
     // 2. Follicle Ambient Occlusion (deep warm occlusion near skin roots)
     float follicleAO = mix(0.22, 1.0, pow(clamp(h, 0.0, 1.0), 0.72));
@@ -106,6 +110,7 @@ const COMMON_HAIR_BSDF_GLSL = /* glsl */ `
 export const SHELL_VERTEX_SHADER = /* glsl */ `
   attribute float aFollicleMask;
   attribute vec3 aGroomTangent;
+  attribute vec4 aZoneColor;
   attribute float aShellIndex;
 
   uniform sampler2D uPhysicsTex;
@@ -123,6 +128,7 @@ export const SHELL_VERTEX_SHADER = /* glsl */ `
 
   varying float vLayerHeight;
   varying float vFollicleMask;
+  varying vec4 vZoneColor;
   varying vec3 vLocalPos;
   varying vec3 vWorldPos;
   varying vec3 vSurfNormal;
@@ -140,6 +146,7 @@ export const SHELL_VERTEX_SHADER = /* glsl */ `
     float h = clamp(aShellIndex * uShellCountScale, 0.0, 1.0);
     vLayerHeight = h;
     vFollicleMask = aFollicleMask;
+    vZoneColor = aZoneColor;
     vLocalPos = position;
 
     vec3 localNormal = normalize(normal);
@@ -237,6 +244,7 @@ export const SHELL_FRAGMENT_SHADER = /* glsl */ `
 
   varying float vLayerHeight;
   varying float vFollicleMask;
+  varying vec4 vZoneColor;
   varying vec3 vLocalPos;
   varying vec3 vWorldPos;
   varying vec3 vSurfNormal;
@@ -306,7 +314,8 @@ export const SHELL_FRAGMENT_SHADER = /* glsl */ `
       vHairTangent,
       vLayerHeight,
       rand.x,
-      vCombMemory
+      vCombMemory,
+      vZoneColor
     );
 
     gl_FragColor = vec4(color, 1.0);
@@ -320,6 +329,7 @@ export const STRAND_VERTEX_SHADER = /* glsl */ `
   attribute vec3 aClumpOffset;
   attribute float aStrandSeed;
   attribute float aMaskValue;
+  attribute vec4 aZoneColor;
 
   uniform sampler2D uPhysicsTex;
   uniform float uFurLength;
@@ -337,6 +347,7 @@ export const STRAND_VERTEX_SHADER = /* glsl */ `
   varying float vHeight;
   varying float vRibbonU;
   varying float vStrandSeed;
+  varying vec4 vZoneColor;
   varying vec3 vWorldPos;
   varying vec3 vSurfNormal;
   varying vec3 vHairTangent;
@@ -354,6 +365,7 @@ export const STRAND_VERTEX_SHADER = /* glsl */ `
     vHeight = h;
     vRibbonU = position.x; // [-1..1] across ribbon width
     vStrandSeed = aStrandSeed;
+    vZoneColor = aZoneColor;
 
     // Density culling in vertex shader (collapse inactive strands to zero area)
     if (aStrandSeed > uFurDensity || aMaskValue < 0.05) {
@@ -478,6 +490,7 @@ export const STRAND_FRAGMENT_SHADER = /* glsl */ `
   varying float vHeight;
   varying float vRibbonU;
   varying float vStrandSeed;
+  varying vec4 vZoneColor;
   varying vec3 vWorldPos;
   varying vec3 vSurfNormal;
   varying vec3 vHairTangent;
@@ -490,7 +503,8 @@ export const STRAND_FRAGMENT_SHADER = /* glsl */ `
       vHairTangent,
       vHeight,
       vStrandSeed,
-      vCombMemory
+      vCombMemory,
+      vZoneColor
     );
 
     // Cylindrical cross-strand shading across the geometrically tapered 3D ribbon

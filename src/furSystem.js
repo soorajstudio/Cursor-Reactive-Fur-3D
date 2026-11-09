@@ -103,6 +103,15 @@ export function createGPUFurSystem(baseGeometry, initialParams, customFollicleMa
   shellGeometry.attributes.aFollicleMask = baseGeometry.attributes.aFollicleMask;
   shellGeometry.attributes.aGroomTangent = baseGeometry.attributes.aGroomTangent;
 
+  if (baseGeometry.attributes.aZoneColor) {
+    shellGeometry.attributes.aZoneColor = baseGeometry.attributes.aZoneColor;
+  } else {
+    shellGeometry.setAttribute(
+      'aZoneColor',
+      new THREE.BufferAttribute(new Float32Array(baseGeometry.attributes.position.count * 4), 4)
+    );
+  }
+
   const shellIndices = new Float32Array(SHELL_COUNT);
   for (let i = 0; i < SHELL_COUNT; i++) {
     shellIndices[i] = (i + 1) / SHELL_COUNT;
@@ -186,8 +195,10 @@ export function createGPUFurSystem(baseGeometry, initialParams, customFollicleMa
   const rootNormalArray = new Float32Array(MAX_STRAND_COUNT * 3);
   const groomDirArray = new Float32Array(MAX_STRAND_COUNT * 3);
   const clumpOffsetArray = new Float32Array(MAX_STRAND_COUNT * 3);
+  const zoneColorArray = new Float32Array(MAX_STRAND_COUNT * 4);
   const strandSeedArray = new Float32Array(MAX_STRAND_COUNT);
   const maskValueArray = new Float32Array(MAX_STRAND_COUNT);
+  const zoneAttr = baseGeometry.attributes.aZoneColor;
 
   let validCount = 0;
   let prngState = 133742;
@@ -269,6 +280,8 @@ export function createGPUFurSystem(baseGeometry, initialParams, customFollicleMa
     cz -= dotCN * nz;
 
     const idx3 = validCount * 3;
+    const idx4 = validCount * 4;
+
     rootPosArray[idx3] = px;
     rootPosArray[idx3 + 1] = py;
     rootPosArray[idx3 + 2] = pz;
@@ -284,6 +297,13 @@ export function createGPUFurSystem(baseGeometry, initialParams, customFollicleMa
     clumpOffsetArray[idx3] = cx;
     clumpOffsetArray[idx3 + 1] = cy;
     clumpOffsetArray[idx3 + 2] = cz;
+
+    if (zoneAttr) {
+      zoneColorArray[idx4] = zoneAttr.getX(i0) * w0 + zoneAttr.getX(i1) * w1 + zoneAttr.getX(i2) * w2;
+      zoneColorArray[idx4 + 1] = zoneAttr.getY(i0) * w0 + zoneAttr.getY(i1) * w1 + zoneAttr.getY(i2) * w2;
+      zoneColorArray[idx4 + 2] = zoneAttr.getZ(i0) * w0 + zoneAttr.getZ(i1) * w1 + zoneAttr.getZ(i2) * w2;
+      zoneColorArray[idx4 + 3] = zoneAttr.getW(i0) * w0 + zoneAttr.getW(i1) * w1 + zoneAttr.getW(i2) * w2;
+    }
 
     strandSeedArray[validCount] = validCount / MAX_STRAND_COUNT;
     maskValueArray[validCount] = mask;
@@ -306,6 +326,10 @@ export function createGPUFurSystem(baseGeometry, initialParams, customFollicleMa
   strandGeometry.setAttribute(
     'aClumpOffset',
     new THREE.InstancedBufferAttribute(clumpOffsetArray, 3)
+  );
+  strandGeometry.setAttribute(
+    'aZoneColor',
+    new THREE.InstancedBufferAttribute(zoneColorArray, 4)
   );
   strandGeometry.setAttribute(
     'aStrandSeed',
