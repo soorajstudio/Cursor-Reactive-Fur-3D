@@ -142,56 +142,10 @@ export function createMinimalUI(container, state, onChange) {
   topGpuFurPill.appendChild(topGpuLabel);
   sceneNav.appendChild(topGpuFurPill);
 
-  // =========================================================================
-  // 1B. CREATURE MODEL SELECTION DOCK (SUB-HEADER GLASS PILL BAR)
-  // =========================================================================
-  let modelNav = document.getElementById('model-nav');
-  if (!modelNav) {
-    modelNav = document.createElement('nav');
-    modelNav.id = 'model-nav';
-    modelNav.className = 'model-nav-bar';
-    modelNav.setAttribute('aria-label', 'Creature Model Selection');
-    document.body.appendChild(modelNav);
-  }
-  modelNav.replaceChildren();
+  const existingModelNav = document.getElementById('model-nav');
+  if (existingModelNav) existingModelNav.remove();
 
-  const modelButtons = {};
   const sidebarModelButtons = {};
-
-  for (const model of CREATURE_MODELS) {
-    const pill = document.createElement('button');
-    pill.type = 'button';
-    pill.className = 'model-pill';
-    pill.setAttribute('data-model', model.id);
-    pill.setAttribute('title', `${model.name} — ${model.tagline}`);
-    const isCur = (state.currentModel || 'mochi') === model.id;
-    if (isCur) {
-      pill.classList.add('active');
-      pill.setAttribute('aria-selected', 'true');
-    } else {
-      pill.setAttribute('aria-selected', 'false');
-    }
-
-    const icon = document.createElement('span');
-    icon.className = 'model-pill-icon';
-    icon.textContent = model.icon;
-
-    const label = document.createElement('span');
-    label.className = 'model-pill-label';
-    label.textContent = model.name;
-
-    pill.appendChild(icon);
-    pill.appendChild(label);
-
-    pill.addEventListener('click', () => {
-      state.currentModel = model.id;
-      updateModelSelectionUI(model.id);
-      onChange('model', model.id);
-    });
-
-    modelButtons[model.id] = pill;
-    modelNav.appendChild(pill);
-  }
 
   // =========================================================================
   // 2. COLLAPSIBLE MATERIALS & LIGHTING SETTINGS PANEL (SIDE GLASS CARD ON DESKTOP, BOTTOM SHEET ON MOBILE)
@@ -972,11 +926,6 @@ export function createMinimalUI(container, state, onChange) {
 
   function updateModelSelectionUI(activeId) {
     const safeId = activeId || 'mochi';
-    Object.keys(modelButtons).forEach((id) => {
-      const isSel = id === safeId;
-      modelButtons[id].classList.toggle('active', isSel);
-      modelButtons[id].setAttribute('aria-selected', String(isSel));
-    });
     Object.keys(sidebarModelButtons).forEach((id) => {
       const isSel = id === safeId;
       sidebarModelButtons[id].classList.toggle('active', isSel);
